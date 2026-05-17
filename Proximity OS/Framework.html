@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Proximity–Value Decision Framework — Mind Anchor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deepest: #030810;
+    --navy-deep: #060d1a;
+    --navy-mid: #0a1628;
+    --navy-panel: #0d1b34;
+    --navy-light: #142240;
+    --navy-border: #1c2f52;
+    --gold-bright: #c9a84c;
+    --gold-warm: #b8923e;
+    --gold-pale: #e8d5a0;
+    --gold-dim: #7a6030;
+    --gold-ghost: rgba(201,168,76,0.06);
+    --gold-glow: rgba(201,168,76,0.12);
+    --cream: #f5f0e8;
+    --cream-dim: #d4cdc0;
+    --white: #ffffff;
+    --text-muted: rgba(213,208,196,0.50);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --body: 'Crimson Pro', Georgia, serif;
+    --label: 'Josefin Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy-deepest);
+    color: var(--cream);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.55;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 24px 52px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(3,8,16,0.97) 60%, transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-brand {
+    font-family: var(--label);
+    font-size: 10.5px;
+    font-weight: 200;
+    letter-spacing: 0.4em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .nav-brand-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    opacity: 0.6;
+  }
+
+  .nav-tag {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 100;
+    letter-spacing: 0.35em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 130px 52px 100px;
+    overflow: hidden;
+  }
+
+  .hero-radial {
+    position: absolute;
+    top: -15%;
+    right: -8%;
+    width: 75vw;
+    height: 75vw;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.05) 0%, transparent 62%);
+    pointer-events: none;
+  }
+
+  .hero-radial-2 {
+    position: absolute;
+    bottom: -20%;
+    left: -5%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(ellipse at center, rgba(10,22,40,0.9) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim) 30%, var(--gold-dim) 70%, transparent);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--label);
+    font-size: 9.5px;
+    font-weight: 200;
+    letter-spacing: 0.45em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 52px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 44px;
+    height: 1px;
+    background: var(--gold-bright);
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(50px, 7.5vw, 100px);
+    font-weight: 300;
+    line-height: 1.03;
+    letter-spacing: -0.015em;
+    color: var(--cream);
+    max-width: 950px;
+    margin-bottom: 52px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  .hero-subtitle {
+    font-family: var(--body);
+    font-size: clamp(17px, 2vw, 22px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream-dim);
+    max-width: 640px;
+    line-height: 1.75;
+    margin-bottom: 72px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 64px;
+    align-items: flex-start;
+    padding-top: 40px;
+    border-top: 1px solid var(--navy-border);
+  }
+
+  .hero-meta-item { display: flex; flex-direction: column; gap: 9px; }
+
+  .meta-label {
+    font-family: var(--label);
+    font-size: 8.5px;
+    font-weight: 200;
+    letter-spacing: 0.38em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+  }
+
+  .meta-value {
+    font-family: var(--body);
+    font-size: 14.5px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    letter-spacing: 0.02em;
+  }
+
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 52px;
+    right: 52px;
+    font-family: var(--label);
+    font-size: 8.5px;
+    letter-spacing: 0.32em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero-scroll-indicator::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    animation: scrollLine 2.8s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.9; }
+  }
+
+  /* ── SECTION STRUCTURE ── */
+  section {
+    position: relative;
+    padding: 128px 52px;
+  }
+
+  .section-inner { max-width: 1120px; margin: 0 auto; }
+  .section-inner-narrow { max-width: 780px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 200;
+    letter-spacing: 0.48em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 34px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .section-label .num { color: var(--gold-dim); }
+
+  .section-h {
+    font-family: var(--serif);
+    font-size: clamp(38px, 5.2vw, 64px);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--cream);
+    margin-bottom: 52px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-h em { font-style: italic; color: var(--gold-pale); }
+
+  .body-text {
+    font-family: var(--body);
+    font-size: clamp(16px, 1.6vw, 19px);
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.88;
+    margin-bottom: 28px;
+  }
+
+  .body-text strong { color: var(--cream); font-weight: 400; }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--navy-border) 20%, var(--navy-border) 80%, transparent);
+  }
+
+  .divider-gold {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim) 25%, var(--gold-dim) 75%, transparent);
+    margin: 0;
+  }
+
+  .bg-panel { background: var(--navy-panel); }
+  .bg-mid { background: var(--navy-mid); }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 2px solid var(--gold-bright);
+    padding: 28px 44px;
+    margin: 60px 0;
+    background: var(--gold-ghost);
+  }
+
+  .pull-quote p {
+    font-family: var(--serif);
+    font-size: clamp(21px, 2.8vw, 34px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-pale);
+    line-height: 1.5;
+  }
+
+  /* ── DEFINITION BOX ── */
+  .definition-box {
+    border: 1px solid var(--gold-dim);
+    padding: 60px;
+    background: linear-gradient(140deg, rgba(201,168,76,0.05), transparent 60%);
+    margin: 44px 0;
+    position: relative;
+  }
+
+  .definition-box::before {
+    content: '❧';
+    position: absolute;
+    top: -17px;
+    left: 60px;
+    background: var(--navy-deepest);
+    padding: 0 14px;
+    color: var(--gold-bright);
+    font-size: 22px;
+  }
+
+  .definition-box p {
+    font-family: var(--serif);
+    font-size: clamp(19px, 2.3vw, 28px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.6;
+  }
+
+  .definition-box p em { color: var(--gold-pale); font-style: italic; }
+
+  /* ── CONCEPT TERMS GRID ── */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    margin: 52px 0;
+  }
+
+  .concept-card {
+    padding: 44px 38px;
+    border: 1px solid var(--navy-border);
+    background: var(--navy-mid);
+    position: relative;
+    transition: border-color 0.35s, background 0.35s;
+  }
+
+  .concept-card:hover {
+    border-color: var(--gold-dim);
+    background: linear-gradient(140deg, rgba(201,168,76,0.05), var(--navy-mid) 70%);
+  }
+
+  .concept-card-num {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 100;
+    letter-spacing: 0.3em;
+    color: var(--gold-dim);
+    margin-bottom: 20px;
+  }
+
+  .concept-term {
+    font-family: var(--serif);
+    font-size: clamp(18px, 1.8vw, 23px);
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .concept-def {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.75;
+  }
+
+  /* ── THREE PILLARS ── */
+  .pillars-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin: 52px 0;
+  }
+
+  .pillar {
+    padding-top: 36px;
+    border-top: 2px solid var(--gold-dim);
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .pillar:hover { border-top-color: var(--gold-bright); }
+
+  .pillar-icon {
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--gold-bright);
+    margin-bottom: 22px;
+    line-height: 1;
+  }
+
+  .pillar-title {
+    font-family: var(--label);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.32em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .pillar-body {
+    font-family: var(--body);
+    font-size: 15.5px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.78;
+  }
+
+  /* ── AVOIDANCE CYCLE TABLE ── */
+  .cycle-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 44px 0;
+  }
+
+  .cycle-table thead th {
+    font-family: var(--label);
+    font-size: 8.5px;
+    font-weight: 200;
+    letter-spacing: 0.4em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    padding: 16px 22px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold-dim);
+    white-space: nowrap;
+  }
+
+  .cycle-table tbody td {
+    padding: 24px 22px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--navy-border);
+  }
+
+  .cycle-table tbody tr:hover td { background: var(--gold-ghost); }
+
+  .cycle-phase {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .cycle-without {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(213,208,196,0.6);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .cycle-with {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+
+  /* ── FRAMEWORK MATRIX ── */
+  .matrix-wrap {
+    position: relative;
+    padding: 30px 0 0 54px;
+  }
+
+  .axis-y {
+    position: absolute;
+    left: 0;
+    top: 52%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-family: var(--label);
+    font-size: 8.5px;
+    font-weight: 200;
+    letter-spacing: 0.38em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .axis-x {
+    text-align: center;
+    margin-top: 18px;
+    font-family: var(--label);
+    font-size: 8.5px;
+    font-weight: 200;
+    letter-spacing: 0.38em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border: 1px solid var(--navy-border);
+  }
+
+  .matrix-cell {
+    padding: 48px 44px;
+    border: 1px solid var(--navy-border);
+    position: relative;
+    transition: background 0.4s;
+  }
+
+  .matrix-cell:hover { background: rgba(201,168,76,0.04); }
+
+  .matrix-cell.pyrrhic {
+    background: linear-gradient(140deg, rgba(201,168,76,0.09), rgba(201,168,76,0.02) 70%);
+    border-color: var(--gold-dim);
+  }
+
+  .matrix-cell.pyrrhic::after {
+    content: '★';
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    color: var(--gold-bright);
+    font-size: 14px;
+  }
+
+  .cell-tag {
+    font-family: var(--label);
+    font-size: 8.5px;
+    font-weight: 200;
+    letter-spacing: 0.38em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .cell-q {
+    font-family: var(--label);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gold-bright);
+    letter-spacing: 0.1em;
+  }
+
+  .cell-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+
+  .cell-desc {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.72;
+    margin-bottom: 14px;
+  }
+
+  .cell-action {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cell-action::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold-bright);
+  }
+
+  /* ── FAILURE PATTERNS ── */
+  .patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    gap: 22px;
+    margin: 44px 0;
+  }
+
+  .pattern-card {
+    border: 1px solid var(--navy-border);
+    padding: 38px 34px;
+    background: var(--navy-mid);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .pattern-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-3px);
+  }
+
+  .pattern-name {
+    font-family: var(--label);
+    font-size: 9.5px;
+    font-weight: 300;
+    letter-spacing: 0.32em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .pattern-desc {
+    font-family: var(--body);
+    font-size: 15.5px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.74;
+  }
+
+  /* ── REAL EXAMPLE ── */
+  .example-block {
+    padding: 68px 60px;
+    background: var(--navy-panel);
+    border: 1px solid var(--navy-border);
+    border-left: 3px solid var(--gold-bright);
+    margin: 52px 0;
+    position: relative;
+  }
+
+  .example-eyebrow {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 200;
+    letter-spacing: 0.42em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 34px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .example-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold-bright);
+  }
+
+  .example-narrative {
+    font-family: var(--body);
+    font-size: clamp(17px, 1.8vw, 20px);
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.9;
+    margin-bottom: 26px;
+  }
+
+  .example-conclusion {
+    font-family: var(--serif);
+    font-size: clamp(21px, 2.6vw, 30px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-pale);
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--navy-border);
+    line-height: 1.5;
+  }
+
+  /* ── DECISION AUDIT ── */
+  .audit-items {
+    counter-reset: audit-counter;
+    margin: 52px 0;
+  }
+
+  .audit-item {
+    counter-increment: audit-counter;
+    display: flex;
+    gap: 36px;
+    padding: 38px 0;
+    border-bottom: 1px solid var(--navy-border);
+    align-items: flex-start;
+  }
+
+  .audit-item::before {
+    content: "0" counter(audit-counter);
+    font-family: var(--label);
+    font-size: 11px;
+    font-weight: 200;
+    letter-spacing: 0.12em;
+    color: var(--gold-bright);
+    flex-shrink: 0;
+    margin-top: 4px;
+    min-width: 32px;
+  }
+
+  .audit-question {
+    font-family: var(--serif);
+    font-size: clamp(19px, 2.1vw, 26px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.45;
+  }
+
+  .audit-hint {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-top: 10px;
+    line-height: 1.65;
+  }
+
+  .tactical-rule {
+    padding: 52px 60px;
+    border: 1px solid var(--gold-dim);
+    background: linear-gradient(140deg, rgba(201,168,76,0.07), transparent 60%);
+    margin: 52px 0;
+    text-align: center;
+  }
+
+  .tactical-rule p {
+    font-family: var(--serif);
+    font-size: clamp(21px, 2.6vw, 32px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-pale);
+    line-height: 1.5;
+  }
+
+  /* ── WORKSHOP & ADVISORY ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 52px;
+    margin: 52px 0;
+  }
+
+  .col-block { border-top: 2px solid var(--gold-dim); padding-top: 38px; }
+
+  .col-block-title {
+    font-family: var(--label);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.36em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 26px;
+  }
+
+  .list-clean { list-style: none; padding: 0; }
+
+  .list-clean li {
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(28,47,82,0.55);
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    line-height: 1.6;
+  }
+
+  .list-clean li::before {
+    content: '—';
+    color: var(--gold-dim);
+    font-family: var(--label);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* ── ADVISORY TIERS TABLE ── */
+  .tier-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 44px 0;
+  }
+
+  .tier-table thead th {
+    font-family: var(--label);
+    font-size: 8.5px;
+    font-weight: 200;
+    letter-spacing: 0.4em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    padding: 16px 22px;
+    text-align: left;
+    border-bottom: 2px solid var(--gold-dim);
+  }
+
+  .tier-table tbody td {
+    padding: 22px;
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    border-bottom: 1px solid var(--navy-border);
+    line-height: 1.65;
+    vertical-align: top;
+  }
+
+  .tier-table tbody td:first-child {
+    font-family: var(--label);
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--gold-bright);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tier-table tbody tr:hover td { background: var(--gold-ghost); }
+
+  /* ── WORKSHOP FORMAT ── */
+  .workshop-formats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin: 44px 0;
+  }
+
+  .workshop-card {
+    border: 1px solid var(--navy-border);
+    padding: 44px 36px;
+    background: var(--navy-mid);
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+
+  .workshop-card:hover {
+    border-color: var(--gold-dim);
+    transform: translateY(-3px);
+  }
+
+  .workshop-label {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .workshop-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .workshop-duration {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 200;
+    letter-spacing: 0.28em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .workshop-deliverables {
+    font-family: var(--body);
+    font-size: 14.5px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.72;
+  }
+
+  /* ── OS METRICS ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 52px 0;
+    border: 1px solid var(--navy-border);
+  }
+
+  .metric-cell {
+    padding: 52px 40px;
+    border: 1px solid var(--navy-border);
+    text-align: center;
+    background: var(--navy-mid);
+    transition: background 0.35s;
+  }
+
+  .metric-cell:hover { background: linear-gradient(140deg, rgba(201,168,76,0.06), var(--navy-mid) 70%); }
+
+  .metric-value {
+    font-family: var(--serif);
+    font-size: clamp(38px, 4.5vw, 60px);
+    font-weight: 300;
+    color: var(--gold-pale);
+    line-height: 1;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+
+  .metric-label {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 200;
+    letter-spacing: 0.38em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .metric-desc {
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ── GOLD ORNAMENT ── */
+  .gold-rule {
+    text-align: center;
+    margin: 64px 0;
+    color: var(--gold-dim);
+    font-size: 16px;
+    letter-spacing: 0.5em;
+  }
+
+  /* ── PROXIMITY TAX BOX ── */
+  .tax-box {
+    border: 1px solid var(--gold-dim);
+    padding: 52px 56px;
+    background: linear-gradient(140deg, rgba(201,168,76,0.07), transparent 60%);
+    margin: 44px 0;
+    position: relative;
+  }
+
+  .tax-box-label {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 200;
+    letter-spacing: 0.42em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .tax-formula {
+    font-family: var(--serif);
+    font-size: clamp(16px, 1.8vw, 22px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .tax-formula em { color: var(--gold-pale); font-style: italic; }
+
+  .tax-thresholds {
+    display: flex;
+    gap: 40px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .threshold {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .threshold-val {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold-pale);
+  }
+
+  .threshold-desc {
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ── CLOSING ── */
+  .closing {
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 160px 52px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .closing::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim) 30%, var(--gold-dim) 70%, transparent);
+  }
+
+  .closing-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.05) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .closing-ornament {
+    font-family: var(--serif);
+    font-size: 34px;
+    color: var(--gold-dim);
+    margin-bottom: 52px;
+    letter-spacing: 0.5em;
+  }
+
+  .closing-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5.5vw, 74px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+    max-width: 900px;
+    margin: 0 auto 48px;
+    letter-spacing: -0.01em;
+  }
+
+  .closing-title em { font-style: italic; color: var(--gold-pale); }
+
+  .closing-body {
+    font-family: var(--body);
+    font-size: clamp(17px, 1.9vw, 22px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream-dim);
+    max-width: 680px;
+    line-height: 1.82;
+    margin: 0 auto 60px;
+  }
+
+  .closing-law {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 200;
+    letter-spacing: 0.4em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .final-line {
+    font-family: var(--serif);
+    font-size: clamp(17px, 2vw, 24px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream-dim);
+    max-width: 680px;
+    margin: 0 auto 60px;
+    line-height: 1.7;
+  }
+
+  .brand-footer {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 100;
+    letter-spacing: 0.4em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 40px;
+  }
+
+  /* ── IMPACT STAT ── */
+  .impact-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin: 52px 0;
+    border: 1px solid var(--navy-border);
+  }
+
+  .impact-cell {
+    padding: 40px 32px;
+    border: 1px solid var(--navy-border);
+    text-align: center;
+    background: var(--navy-mid);
+  }
+
+  .impact-word {
+    font-family: var(--serif);
+    font-size: clamp(22px, 2.5vw, 34px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-pale);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .impact-sub {
+    font-family: var(--label);
+    font-size: 8.5px;
+    font-weight: 200;
+    letter-spacing: 0.35em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* ── ECOSYSTEM SECTION ── */
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2px;
+    margin: 44px 0;
+    border: 1px solid var(--navy-border);
+  }
+
+  .eco-cell {
+    padding: 44px 36px;
+    border: 1px solid var(--navy-border);
+    background: var(--navy-mid);
+    transition: background 0.35s;
+  }
+
+  .eco-cell:hover {
+    background: linear-gradient(140deg, rgba(201,168,76,0.06), var(--navy-mid) 70%);
+  }
+
+  .eco-domain {
+    font-family: var(--label);
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .eco-body {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.74;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    section { padding: 80px 28px; }
+    nav { padding: 20px 28px; }
+    .hero { padding: 100px 28px 80px; }
+    .matrix-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .pillars-row { grid-template-columns: 1fr; }
+    .workshop-formats { grid-template-columns: 1fr; }
+    .metrics-row { grid-template-columns: 1fr; }
+    .impact-strip { grid-template-columns: 1fr 1fr; }
+    .ecosystem-grid { grid-template-columns: 1fr; }
+    .hero-meta { flex-wrap: wrap; gap: 32px; }
+    .definition-box { padding: 40px 32px; }
+    .example-block { padding: 44px 36px; }
+    .tactical-rule { padding: 40px 32px; }
+    .tax-box { padding: 40px 32px; }
+    .matrix-wrap { padding: 10px 0 0 0; }
+    .axis-y { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-dot"></div>
+    Mind Anchor
+  </div>
+  <div class="nav-tag">Framework Series · 2025</div>
+</nav>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-radial"></div>
+  <div class="hero-radial-2"></div>
+
+  <div class="hero-eyebrow reveal">Mind Anchor · Intellectual Property · Strategic Maturity Systems</div>
+
+  <h1 class="hero-title reveal">
+    The Proximity–Value<br>
+    <em>Decision Framework</em>
+  </h1>
+
+  <p class="hero-subtitle reveal">
+    People do not abandon high-value opportunities because they lack importance. They abandon them because emotional discomfort silently overpowers strategic judgment — and the mind reframes this avoidance as wisdom.
+  </p>
+
+  <div class="hero-meta reveal">
+    <div class="hero-meta-item">
+      <span class="meta-label">Framework Type</span>
+      <span class="meta-value">Diagnostic · Strategic · Psychological</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="meta-label">Primary Context</span>
+      <span class="meta-value">Executive Leadership · Founder Psychology</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="meta-label">Operating System</span>
+      <span class="meta-value">ProximityOS v2.0 — Emotional Governance</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll-indicator">Scroll</div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 01 · FRAMEWORK DEFINITION -->
+<!-- ══════════════════════════════════════════ -->
+<section class="bg-panel">
+  <div class="section-inner-narrow">
+    <div class="section-label reveal"><span class="num">01</span> Framework Definition</div>
+    <h2 class="section-h reveal">What This<br><em>Framework Is</em></h2>
+
+    <div class="definition-box reveal">
+      <p>
+        A mature intellectual property system with <em>diagnostic, operational, and strategic layers</em> — built to separate actual strategic value from the emotional resistance attached to proximity. It exposes the hidden cost of ego-driven avoidance where individuals unknowingly optimize for emotional relief instead of long-term strategic value.
+      </p>
+    </div>
+
+    <p class="body-text reveal">
+      The framework identifies a singular, consequential pattern: the moment emotional discomfort is reframed as strategic wisdom. It is not merely an insight. It is a repeatable, commercially deployable system for diagnosing leadership dysfunction, hidden team politics, founder bottlenecks, hiring distortions, and executive insecurity systems.
+    </p>
+
+    <div class="pull-quote reveal">
+      <p>"Never make permanent strategic decisions inside temporary emotional activation."</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 02 · CORE IDEA -->
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <div class="section-inner-narrow">
+    <div class="section-label reveal"><span class="num">02</span> Core Idea</div>
+    <h2 class="section-h reveal">The Problem<br><em>It Solves</em></h2>
+
+    <p class="body-text reveal">
+      Modern professionals increasingly confuse <strong>discomfort with danger, boundaries with avoidance, and emotional relief with wisdom</strong>. The result is a class of strategic failure that appears, from the inside, to look like clarity.
+    </p>
+
+    <p class="body-text reveal">
+      This framework solves the problem of emotionally distorted decision-making disguised as rational judgment. It makes visible the <strong>Proximity Tax</strong> — the hidden cost paid when emotional discomfort overrides strategic positioning — and operationalizes emotional dysfunction into measurable strategic loss: loss of opportunity, leverage, access, and performance.
+    </p>
+
+    <div class="concept-grid reveal">
+      <div class="concept-card">
+        <div class="concept-card-num">001</div>
+        <div class="concept-term">Proximity Tax</div>
+        <div class="concept-def">The hidden cost — in opportunity, influence, and performance — paid when emotional discomfort overrides strategic positioning.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-num">002</div>
+        <div class="concept-term">Pyrrhic Avoidance</div>
+        <div class="concept-def">Avoidance victories that cost more than remaining would have. The relief of withdrawal as a form of strategic self-harm.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-num">003</div>
+        <div class="concept-term">Ego-Defensive Risk Switch</div>
+        <div class="concept-def">The neurological rerouting from value optimization to threat minimization — the moment ego overrides strategy.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-num">004</div>
+        <div class="concept-term">Sovereignty Paradox</div>
+        <div class="concept-def">The person being avoided becomes the hidden controller of your strategic movement. Avoidance transfers power.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-num">005</div>
+        <div class="concept-term">Weaponized Neutrality</div>
+        <div class="concept-def">The ability to maintain strategic positioning despite emotional activation. Neutrality as a discipline, not an absence.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-num">006</div>
+        <div class="concept-term">Emotionally Optimized Systems</div>
+        <div class="concept-def">Organizations built for the founder's psychological comfort rather than strategic performance — the systemic form of the Proximity Tax.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 03 · STRATEGIC RELEVANCE -->
+<!-- ══════════════════════════════════════════ -->
+<section class="bg-mid">
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">03</span> Strategic Relevance</div>
+    <h2 class="section-h reveal">Why This Framework<br><em>Matters Strategically</em></h2>
+
+    <p class="body-text reveal" style="max-width: 760px;">
+      The framework explains hidden decision distortion inside high-performance environments — making it directly relevant for leadership, hiring, negotiation, and team dynamics. Most strategic failures are not informational failures. They are <strong>emotional governance failures.</strong>
+    </p>
+
+    <div class="impact-strip reveal">
+      <div class="impact-cell">
+        <div class="impact-word">Opportunity</div>
+        <div class="impact-sub">Lost through avoidance</div>
+      </div>
+      <div class="impact-cell">
+        <div class="impact-word">Leverage</div>
+        <div class="impact-sub">Surrendered through withdrawal</div>
+      </div>
+      <div class="impact-cell">
+        <div class="impact-word">Access</div>
+        <div class="impact-sub">Forfeited through ego defense</div>
+      </div>
+      <div class="impact-cell">
+        <div class="impact-word">Performance</div>
+        <div class="impact-sub">Eroded through comfort optimization</div>
+      </div>
+    </div>
+
+    <div class="tax-box reveal">
+      <div class="tax-box-label">The Proximity Tax Coefficient — Systemic Health Metric</div>
+      <div class="tax-formula">
+        <em>Proximity Tax Coefficient</em> = Abandoned High-Value Projects due to Internal Friction ÷ Total Strategic Initiatives
+      </div>
+      <div class="tax-thresholds">
+        <div class="threshold">
+          <div class="threshold-val">&lt; 0.15</div>
+          <div class="threshold-desc">Strategically mature — value-first decisions dominant</div>
+        </div>
+        <div class="threshold">
+          <div class="threshold-val">&gt; 0.40</div>
+          <div class="threshold-desc">Emotionally optimized — systemic contraction underway</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 04 · PSYCHOLOGICAL RELEVANCE -->
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <div class="section-inner-narrow">
+    <div class="section-label reveal"><span class="num">04</span> Psychological Relevance</div>
+    <h2 class="section-h reveal">The Architecture<br><em>of Avoidance</em></h2>
+
+    <p class="body-text reveal">
+      The framework integrates ego threat, amygdala activation, avoidance conditioning, and rationalization loops. Its strongest psychological insight is that <strong>the mind reframes emotionally defensive behavior as strategic wisdom</strong> — explaining why awareness alone often fails to stop the pattern.
+    </p>
+
+    <p class="body-text reveal">
+      The avoidance sequence is not random. It follows a predictable five-phase cycle, each phase reinforcing the next. Without interruption, the nervous system learns: <em>avoidance equals relief</em>. With the framework applied: <em>tolerance equals strategic range expansion.</em>
+    </p>
+
+    <table class="cycle-table reveal">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>Without Framework</th>
+          <th>With ProximityOS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="cycle-phase">01 · Activation</span></td>
+          <td><span class="cycle-without">Discomfort, ego threat, or criticism triggers response</span></td>
+          <td><span class="cycle-with">Same signal — flagged as data, not danger</span></td>
+        </tr>
+        <tr>
+          <td><span class="cycle-phase">02 · Rerouting</span></td>
+          <td><span class="cycle-without">Ego-Defensive Risk Switch triggers: "What reduces discomfort?"</span></td>
+          <td><span class="cycle-with">Pause invoked — no strategic decision made yet</span></td>
+        </tr>
+        <tr>
+          <td><span class="cycle-phase">03 · Reframing</span></td>
+          <td><span class="cycle-without">Avoidance rationalized as boundaries, intuition, or alignment</span></td>
+          <td><span class="cycle-with">5-Question Decision Audit executed with precision</span></td>
+        </tr>
+        <tr>
+          <td><span class="cycle-phase">04 · Action</span></td>
+          <td><span class="cycle-without">Exit, withdrawal, or organizational silence</span></td>
+          <td><span class="cycle-with">Value-first decision with conditional resolution plan</span></td>
+        </tr>
+        <tr>
+          <td><span class="cycle-phase">05 · Reinforcement</span></td>
+          <td><span class="cycle-without">Nervous system learns: avoidance = relief. Loop tightens.</span></td>
+          <td><span class="cycle-with">Nervous system learns: tolerance = strategic range expansion</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-quote reveal">
+      <p>"Discomfort is not danger. It is data indicating proximity to leverage."</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 05 · FOUNDER RELEVANCE -->
+<!-- ══════════════════════════════════════════ -->
+<section class="bg-panel">
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">05</span> Founder Relevance</div>
+    <h2 class="section-h reveal">When One Person's Psychology<br><em>Becomes Company Policy</em></h2>
+
+    <p class="body-text reveal" style="max-width: 760px;">
+      Founders amplify internal emotional architecture into external systems. This is where the framework becomes governance infrastructure. Leaders do not fail in isolation — they build organizations that mirror their psychological limitations.
+    </p>
+
+    <div class="pillars-row reveal">
+      <div class="pillar">
+        <div class="pillar-icon">⊕</div>
+        <div class="pillar-title">The Pathological Flow</div>
+        <div class="pillar-body">Founder avoids challenge → removes dissent → receives filtered information → blind spots increase → decision quality declines → trusts fewer people → executive distortion spiral deepens.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">◈</div>
+        <div class="pillar-title">The Desired Flow</div>
+        <div class="pillar-body">Leaders act as gatekeepers for strategic neutrality. Routine behaviors: scheduled proximity reviews, mandatory annotation of emotional signals in major decisions, calibration sessions modeling Pause → Diagnose → Reframe → Decide.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">◇</div>
+        <div class="pillar-title">ProximityOS Provides</div>
+        <div class="pillar-body">Founder Emotional Architecture Audit. Independent review when founder discomfort score exceeds threshold. Mandatory cooling-off windows before exit decisions. Incentive structures tied to Proximity Tax reduction.</div>
+      </div>
+    </div>
+
+    <div class="pull-quote reveal">
+      <p>"The OS protects organizations from founder psychology leakage — the most expensive and invisible organizational risk."</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 06 · FRAMEWORK MATRIX -->
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">06</span> Framework Matrix</div>
+    <h2 class="section-h reveal">The Proximity–Value<br><em>Diagnostic Matrix</em></h2>
+
+    <p class="body-text reveal" style="max-width: 760px;">
+      The core diagnostic tool. A four-quadrant matrix that separates strategic value from emotional experience, enabling objective classification of every significant relationship, opportunity, or professional context — before a decision is made.
+    </p>
+
+    <div class="matrix-wrap reveal">
+      <div class="axis-y">Strategic Value ↑ High · Low ↓</div>
+      <div class="matrix-grid">
+        <div class="matrix-cell">
+          <div class="cell-tag"><span class="cell-q">Q2</span> High Value · Low Discomfort</div>
+          <div class="cell-title">The Ideal Environment</div>
+          <div class="cell-desc">High value with minimal emotional friction. The rare and desirable quadrant. The goal is not to manufacture discomfort but to recognize that its absence here is genuine, not avoidance-enabled.</div>
+          <div class="cell-action">Scale &amp; Maintain</div>
+        </div>
+        <div class="matrix-cell pyrrhic">
+          <div class="cell-tag"><span class="cell-q">Q4</span> High Value · High Discomfort</div>
+          <div class="cell-title">The Pyrrhic Zone</div>
+          <div class="cell-desc">High strategic value, high emotional pain. This is where the Proximity Tax is most costly. The mind will generate compelling narratives for exit. The framework requires separation before deciding.</div>
+          <div class="cell-action">Isolate &amp; Execute — Separate Before Deciding</div>
+        </div>
+        <div class="matrix-cell">
+          <div class="cell-tag"><span class="cell-q">Q1</span> Low Value · Low Discomfort</div>
+          <div class="cell-title">Neutral Zones</div>
+          <div class="cell-desc">Neither threatening nor strategically valuable. Comfort without consequence. The danger is mistaking this for a flourishing environment. Neutral is not positive. It is merely the absence of both growth and threat.</div>
+          <div class="cell-action">Automate or Deprecate</div>
+        </div>
+        <div class="matrix-cell">
+          <div class="cell-tag"><span class="cell-q">Q3</span> Low Value · High Discomfort</div>
+          <div class="cell-title">Toxic Traps</div>
+          <div class="cell-desc">Genuine harm with minimal return. The one quadrant where exit is strategically legitimate. The framework exists precisely to distinguish this from Q4 — the most common error in professional decision-making.</div>
+          <div class="cell-action">Surgical Exit — Real Boundaries Apply</div>
+        </div>
+      </div>
+      <div class="axis-x">Emotional Discomfort → Low · High →</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 07 · FAILURE PATTERNS -->
+<!-- ══════════════════════════════════════════ -->
+<section class="bg-mid">
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">07</span> Failure Patterns</div>
+    <h2 class="section-h reveal">How Avoidance<br><em>Disguises Itself</em></h2>
+
+    <p class="body-text reveal" style="max-width: 760px;">
+      The framework identifies predictable strategic distortions — the language and behavioral signatures of avoidance masquerading as wisdom, self-care, or leadership maturity.
+    </p>
+
+    <div class="patterns-grid reveal">
+      <div class="pattern-card">
+        <div class="pattern-name">Emotional Rationalization</div>
+        <div class="pattern-desc">Calling avoidance "intuition," "gut feeling," or "reading the room." The mind constructs coherent narratives to explain strategically irrational decisions as though they were insights.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-name">Therapeutic Language Abuse</div>
+        <div class="pattern-desc">Using "boundaries," "peace," "healing," and "authenticity" to justify ego protection in professional or strategic contexts. Wellness vocabulary applied to strategic retreats.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-name">Ego-Filtered Hiring</div>
+        <div class="pattern-desc">Choosing operationally weaker candidates because they generate less ego discomfort. Building teams that optimize for the leader's psychological comfort rather than organizational performance.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-name">Distance Addiction</div>
+        <div class="pattern-desc">Mistaking withdrawal for maturity. Confusing the absence of discomfort for the presence of wisdom. The longer the pattern holds, the more withdrawal feels like discernment.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-name">Strategic Self-Harm</div>
+        <div class="pattern-desc">Taking demonstrably worse outcomes to avoid emotional discomfort. Choosing inferior options because they cost less psychologically — and calling it discipline or values-alignment.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-name">Conflict-Avoidant Leadership</div>
+        <div class="pattern-desc">Building emotionally soft cultures that are strategically brittle. Rewarding harmony over honesty. Penalizing productive friction. The silence in the room is mistaken for respect.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 08 · REAL EXAMPLES -->
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <div class="section-inner-narrow">
+    <div class="section-label reveal"><span class="num">08</span> Real-World Application</div>
+    <h2 class="section-h reveal">The Founder Who<br><em>Removed Value</em></h2>
+
+    <div class="example-block reveal">
+      <div class="example-eyebrow">Case Study · Founder Psychology</div>
+
+      <p class="example-narrative">
+        A founder has a senior operator who challenges assumptions, gives difficult feedback, and exposes weak decisions. The founder finds interactions with them emotionally uncomfortable. Over time — unconsciously, gradually — meetings reduce. Communication weakens. Access decreases. Eventually the operator is removed from strategic discussions.
+      </p>
+
+      <p class="example-narrative">
+        Short-term emotional relief occurs. The tension dissolves. The founder feels cleaner, more at ease in their own rooms.
+      </p>
+
+      <p class="example-narrative">
+        Long-term: decision quality declines. Blind spots increase. Internal politics fill the vacuum left by honest friction. Emotional comfort has replaced strategic tension. The culture begins to optimize for the leader's ego rather than the organization's performance.
+      </p>
+
+      <div class="example-conclusion">
+        The founder believed they had removed friction.<br>
+        They had removed value — and would spend years wondering why performance declined.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 09 · DECISION AUDIT -->
+<!-- ══════════════════════════════════════════ -->
+<section class="bg-panel">
+  <div class="section-inner-narrow">
+    <div class="section-label reveal"><span class="num">09</span> The Decision Audit</div>
+    <h2 class="section-h reveal">Before You<br><em>Walk Away</em></h2>
+
+    <p class="body-text reveal">
+      Before withdrawing from a person, opportunity, room, role, or conversation — apply the five-question audit. This is the deliberate interruption to the Ego Avoidance Cycle. The pause between neurological response and strategic decision.
+    </p>
+
+    <div class="audit-items reveal">
+      <div class="audit-item">
+        <div>
+          <div class="audit-question">What is the actual strategic value here?</div>
+          <div class="audit-hint">Score 1–10. Be specific. Separate what you feel about it from what it is worth strategically.</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div>
+          <div class="audit-question">What specifically is emotionally uncomfortable?</div>
+          <div class="audit-hint">Name it precisely. Vague discomfort is ego-fog. Precision is the beginning of clarity.</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div>
+          <div class="audit-question">Am I avoiding danger — or avoiding ego discomfort?</div>
+          <div class="audit-hint">The most important question. The answer changes almost everything that follows.</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div>
+          <div class="audit-question">If the emotional discomfort disappeared, would I still leave?</div>
+          <div class="audit-hint">A thought experiment that isolates the variable. If the answer is no, the discomfort is the only reason.</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div>
+          <div class="audit-question">What is the hidden cost of this avoidance?</div>
+          <div class="audit-hint">Calculate it. Name it. Write it down. Make the invisible cost visible before you decide.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tactical-rule reveal">
+      <p>Never make permanent strategic decisions inside temporary emotional activation. Wait 24 to 48 hours. Then audit again.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 10 · WORKSHOP APPLICATIONS -->
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">10</span> Workshop Applications</div>
+    <h2 class="section-h reveal">Workshop<br><em>Architecture</em></h2>
+
+    <p class="body-text reveal" style="max-width: 760px;">
+      The framework has strong workshop utility because participants immediately recognize themselves inside it. Recognition precedes transformation. These are the primary deployment formats.
+    </p>
+
+    <div class="workshop-formats reveal">
+      <div class="workshop-card">
+        <div class="workshop-label">Format A</div>
+        <div class="workshop-title">Proximity Mapping Lab</div>
+        <div class="workshop-duration">Half-Day Intensive</div>
+        <div class="workshop-deliverables">Teams map recent decisions onto the Proximity–Value Matrix. Run the 5-Question Audit in pairs. Design separation experiments. Build personal avoidance profiles with strategic remediation plans.</div>
+      </div>
+      <div class="workshop-card">
+        <div class="workshop-label">Format B</div>
+        <div class="workshop-title">Founder Deep-Dive</div>
+        <div class="workshop-duration">Full-Day Session</div>
+        <div class="workshop-deliverables">Founder case work. Role-play hard conversations. Design governance guardrails against ego-filtered decision-making. Build a personal Emotional Architecture Audit with measurable checkpoints.</div>
+      </div>
+      <div class="workshop-card">
+        <div class="workshop-label">Format C</div>
+        <div class="workshop-title">Leadership Sprint</div>
+        <div class="workshop-duration">Two-Day Program</div>
+        <div class="workshop-deliverables">Build organizational playbooks, escalation protocols, and the Emotional Governance Scorecard. Train leadership on Strategic Neutrality. Install the ProximityOS feedback loop inside existing operations.</div>
+      </div>
+    </div>
+
+    <div class="two-col reveal">
+      <div class="col-block">
+        <div class="col-block-title">Workshop Themes</div>
+        <ul class="list-clean">
+          <li>Emotional governance for leaders under pressure</li>
+          <li>Strategic decision-making during ego activation</li>
+          <li>Conflict navigation systems and architecture</li>
+          <li>Founder psychology and institutional avoidance</li>
+          <li>High-performance friction — why discomfort builds value</li>
+          <li>Avoidance culture diagnostics in organizations</li>
+        </ul>
+      </div>
+      <div class="col-block">
+        <div class="col-block-title">Key Exercises</div>
+        <ul class="list-clean">
+          <li>Personal and team Proximity–Value Mapping</li>
+          <li>Ego trigger identification and pattern analysis</li>
+          <li>Strategic loss audit — calculating invisible costs</li>
+          <li>Language Scrubbing Lab — removing defensive phrasing from strategic documents</li>
+          <li>Conflict simulation with real-time debrief</li>
+          <li>Strategic Neutrality training under simulated pressure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 11 · ADVISORY APPLICATIONS -->
+<!-- ══════════════════════════════════════════ -->
+<section class="bg-mid">
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">11</span> Advisory Applications</div>
+    <h2 class="section-h reveal">The Diagnostic<br><em>Lens</em></h2>
+
+    <p class="body-text reveal" style="max-width: 760px;">
+      Most organizations incorrectly diagnose communication problems, trust issues, or alignment failures — when the real issue is emotionally distorted proximity management. The framework becomes the diagnostic lens through which the actual dysfunction becomes legible.
+    </p>
+
+    <table class="tier-table reveal">
+      <thead>
+        <tr>
+          <th>Advisory Tier</th>
+          <th>Offering</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Diagnostic</td>
+          <td>Monthly Proximity Risk report with remediation recommendations. Quantified Proximity Tax coefficient. Decision quality baseline assessment.</td>
+        </tr>
+        <tr>
+          <td>Embedded</td>
+          <td>6–12 month Emotional Governance implementation — tooling, training, scorecards, and escalation architecture integrated into existing operations.</td>
+        </tr>
+        <tr>
+          <td>Executive</td>
+          <td>Targeted coaching for founders and key leaders with measurable KPIs. Founder Emotional Architecture Audit with recurring calibration sessions.</td>
+        </tr>
+        <tr>
+          <td>M&amp;A</td>
+          <td>Pre-deal Proximity Risk due diligence. Post-deal integration playbooks addressing leadership ego dynamics and organizational avoidance culture.</td>
+        </tr>
+        <tr>
+          <td>Licensing</td>
+          <td>ProximityOS playbook and tooling templates for consulting partners. Certified facilitator program. SaaS instrumentation for decision log dashboards.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="two-col reveal">
+      <div class="col-block">
+        <div class="col-block-title">Primary Client Profiles</div>
+        <ul class="list-clean">
+          <li>Founders and founding teams at growth stage</li>
+          <li>Executive leadership and senior management</li>
+          <li>High-conflict co-founder partnerships</li>
+          <li>Organizations undergoing rapid scaling</li>
+          <li>Investment firms evaluating leadership quality</li>
+        </ul>
+      </div>
+      <div class="col-block">
+        <div class="col-block-title">Diagnostic Applications</div>
+        <ul class="list-clean">
+          <li>Team proximity and ego-threat mapping</li>
+          <li>Culture pattern analysis and system redesign</li>
+          <li>Decision-quality audits for executive teams</li>
+          <li>Negotiation consulting under ego pressure</li>
+          <li>Leadership communication architecture review</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- 12 · ECOSYSTEM & OS POSITIONING -->
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">12</span> Ecosystem Potential</div>
+    <h2 class="section-h reveal">ProximityOS<br><em>The Governance Infrastructure</em></h2>
+
+    <p class="body-text reveal" style="max-width: 760px;">
+      The framework evolves beyond content into operational infrastructure — strategic middleware connecting HR, strategy, risk, and executive coaching functions. A data-backed discipline analogous to performance management or operational risk, applied to the domain of human decision architecture.
+    </p>
+
+    <div class="metrics-row reveal">
+      <div class="metric-cell">
+        <div class="metric-value">v2.0</div>
+        <div class="metric-label">ProximityOS Current Build</div>
+        <div class="metric-desc">The Emotional Governance Operating System — diagnostic, operational, and strategic layers unified</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-value">5</div>
+        <div class="metric-label">Diagnostic Layers</div>
+        <div class="metric-desc">Triage, Context Capture, Proximity–Value Scoring, 5-Question Audit, Decision + Experiment, Meta-analysis</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-value">3</div>
+        <div class="metric-label">Feedback Loop Durations</div>
+        <div class="metric-desc">Short operational, medium team, and long organizational loops — each with distinct instrumentation and governance triggers</div>
+      </div>
+    </div>
+
+    <div class="ecosystem-grid reveal">
+      <div class="eco-cell">
+        <div class="eco-domain">Governance</div>
+        <div class="eco-body">Adds Emotional Governance to risk frameworks. Integrates into board materials as "Proximity Risk" — a measurable, reportable, and addressable organizational variable.</div>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-domain">Talent</div>
+        <div class="eco-body">Objective criteria to reduce ego-filtered hiring and firing. Onboarding and role design anchored to strategic value, not interpersonal comfort.</div>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-domain">Operations</div>
+        <div class="eco-body">Proximity checks embedded into project kickoffs, prioritization rituals, and post-mortems. Emotional governance as a standard operational rhythm.</div>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-domain">Culture</div>
+        <div class="eco-body">Normalizes discomfort as data. Builds psychological safety anchored by procedural neutrality rather than interpersonal harmony or conflict suppression.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-gold"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- CLOSING PHILOSOPHY -->
+<!-- ══════════════════════════════════════════ -->
+<section class="closing">
+  <div class="closing-glow"></div>
+
+  <div class="closing-ornament reveal">✦ ✦ ✦</div>
+
+  <h2 class="closing-title reveal">
+    People rarely abandon value<br>
+    because it lacks <em>importance.</em>
+  </h2>
+
+  <p class="closing-body reveal">
+    They abandon it because emotional discomfort quietly overpowered strategic judgment — and the mind, in its extraordinary ingenuity, constructed a narrative that made the loss feel like wisdom.
+  </p>
+
+  <div class="closing-law reveal">
+    Mind Anchor · The Proximity–Value Decision Framework · Strategic Maturity Systems
+  </div>
+
+  <p class="final-line reveal">
+    The most consequential question in professional life is not what you are willing to build. It is what you are willing to remain near — long enough to find out what it is worth.
+  </p>
+
+  <div class="tactical-rule reveal" style="max-width: 680px; margin: 0 auto 60px;">
+    <p>"I thought I was protecting myself. I was actually shrinking my strategic range."</p>
+  </div>
+
+  <span class="brand-footer reveal">Mind Anchor · Intellectual Property · Framework Series · ProximityOS v2.0</span>
+</section>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const delay = parseInt(entry.target.dataset.delay || '0');
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
+
+  reveals.forEach((el) => {
+    // stagger siblings within same parent
+    const siblings = Array.from(el.parentElement.querySelectorAll('.reveal'));
+    const idx = siblings.indexOf(el);
+    el.dataset.delay = String(idx * 75);
+    observer.observe(el);
+  });
+
+  // ── HERO REVEAL ON LOAD ──
+  setTimeout(() => {
+    document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 190 + 200);
+    });
+  }, 80);
+
+  // ── NAV SCROLL OPACITY ──
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.style.background = 'rgba(3,8,16,0.98)';
+    } else {
+      nav.style.background = 'linear-gradient(to bottom, rgba(3,8,16,0.97) 60%, transparent)';
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

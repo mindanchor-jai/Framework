@@ -20,7 +20,7 @@
 </style>
     
 <body>
-<section id= "items" class= "grid">
+<section class= "grid">
     <div class= 'card'>
         <h2>The Proximity-Value Framework </h2>
         <p>The full intellectual case - why emotional discomfort overrides startegy, and what it's quitely costing you. </p>
@@ -58,19 +58,4 @@
     </div>
 </section> 
 </body>
-
-<script>
-    const search = document.getElementbyId("search");
-    const items = document.querySelectorAll("#items li");
-
-    search.addEventListener("input", function () {
-        const value = search.value.toLowerCase();
-
-        items.forEach(item => {
-            item.style.display = item.textContent.toLowerCase().includes(value)
-            ? ""
-            : "none";
-        });
-    });    
-</script> 
 </html>

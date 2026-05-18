@@ -57,5 +57,20 @@
         <a href= "TK5-ProximityTax.pdf" download> Download Toolkit</a>
     </div>
 </section>
+
+<script>
+    const search = document.getElementbyId("search");
+    const items = document.querySelectorAll("#items li");
+
+    search.addEventListener("input", function () {
+        const value = search.value.toLowerCase();
+
+        items.forEach(item => {
+            item.style.display = item.textContent.toLowerCase().includes(value)
+            ? ""
+            : "none";
+        });
+    });    
+</script>    
 </body>
 </html>

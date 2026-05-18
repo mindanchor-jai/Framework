@@ -18,31 +18,16 @@
         paddings: 16px;
     } 
 </style>
-
-<script>
-    const search = document.getElementbyId("search");
-    const items = document.querySelectorAll("#items li");
-
-    search.addEventListener("input", function () {
-        const value = search.value.toLowerCase();
-
-        items.forEach(item => {
-            item.style.display = item.textContent.toLowerCase().includes(value)
-            ? ""
-            : "none";
-        });
-    });    
-</script>     
   
 <body>
-<section class= "grid" id="items">
+<section class= "grid">
     <div class= 'card'>
         <h2>Collection of Frameworks- Library </h2>
         <p>Frameworks for clearer thinking. Built for founders, operators, and serious builders. </p>
         <a href= "Library.html"> Open Library</a>
     </div>
 
-    <div class= "grid">
+    <div class= "card">
         <h2> Framework 1</h2>
         <p>A system for mapping every significant relationship, decision, or collaboration against two axes</p>
         <a href= "Proximity OS/index.html"> Open Framework </a>

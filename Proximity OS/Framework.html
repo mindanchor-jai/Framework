@@ -1196,251 +1196,248 @@
     line-height: 1.74;
   }
 
+
+
   /* ── TOOLKIT ECOSYSTEM ── */
-.toolkit-command {
-  background:
-    radial-gradient(circle at top right, rgba(201,168,76,0.08), transparent 38%),
-    linear-gradient(180deg, var(--navy-panel), var(--navy-deepest));
-}
+  .toolkit-command {
+    background:
+      radial-gradient(circle at top right, rgba(201,168,76,0.08), transparent 38%),
+      linear-gradient(180deg, var(--navy-panel), var(--navy-deepest));
+  }
 
-.framework-architecture {
-  border: 1px solid var(--gold-dim);
-  background: linear-gradient(140deg, rgba(201,168,76,0.07), rgba(10,22,40,0.72));
-  padding: 52px;
-  margin: 52px 0;
-}
+  .framework-architecture {
+    border: 1px solid var(--gold-dim);
+    background: linear-gradient(140deg, rgba(201,168,76,0.07), rgba(10,22,40,0.72));
+    padding: 52px;
+    margin: 52px 0;
+    position: relative;
+    overflow: hidden;
+  }
 
-.arch-label {
-  font-family: var(--label);
-  font-size: 8.5px;
-  letter-spacing: 0.42em;
-  color: var(--gold-bright);
-  text-transform: uppercase;
-  margin-bottom: 28px;
-}
+  .framework-architecture::before {
+    content: 'PVDF';
+    position: absolute;
+    right: 34px;
+    top: 22px;
+    font-family: var(--label);
+    font-size: 52px;
+    letter-spacing: 0.18em;
+    color: rgba(201,168,76,0.045);
+    pointer-events: none;
+  }
 
-.arch-flow {
-  display: grid;
-  grid-template-columns: 1fr 60px 1fr 60px 1fr;
-  gap: 0;
-  align-items: center;
-}
+  .arch-label {
+    font-family: var(--label);
+    font-size: 8.5px;
+    letter-spacing: 0.42em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
 
-.arch-node {
-  border: 1px solid var(--navy-border);
-  background: rgba(3,8,16,0.72);
-  padding: 34px 28px;
-  min-height: 150px;
-}
-
-.arch-node span {
-  display: block;
-  font-family: var(--label);
-  font-size: 8px;
-  letter-spacing: 0.35em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 14px;
-}
-
-.arch-node strong {
-  display: block;
-  font-family: var(--serif);
-  font-size: 25px;
-  font-weight: 300;
-  line-height: 1.25;
-  color: var(--gold-pale);
-}
-
-.arch-arrow {
-  text-align: center;
-  color: var(--gold-bright);
-  font-size: 28px;
-  opacity: 0.65;
-}
-
-.toolkit-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 2px;
-  margin: 52px 0;
-  border: 1px solid var(--navy-border);
-}
-
-.toolkit-card {
-  background: var(--navy-mid);
-  border: 1px solid var(--navy-border);
-  padding: 34px 28px;
-  min-height: 300px;
-  display: flex;
-  flex-direction: column;
-  transition: background 0.35s, border-color 0.35s, transform 0.35s;
-}
-
-.toolkit-card:hover {
-  background: linear-gradient(140deg, rgba(201,168,76,0.07), var(--navy-mid) 72%);
-  border-color: var(--gold-dim);
-  transform: translateY(-3px);
-}
-
-.toolkit-num {
-  font-family: var(--label);
-  font-size: 8.5px;
-  letter-spacing: 0.36em;
-  color: var(--gold-bright);
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.toolkit-name {
-  font-family: var(--serif);
-  font-size: 23px;
-  font-weight: 400;
-  color: var(--cream);
-  line-height: 1.25;
-  margin-bottom: 16px;
-}
-
-.toolkit-role {
-  font-family: var(--body);
-  font-size: 15px;
-  color: var(--cream-dim);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-
-.toolkit-use {
-  margin-top: auto;
-  padding-top: 18px;
-  border-top: 1px solid rgba(28,47,82,0.7);
-  font-family: var(--label);
-  font-size: 8px;
-  letter-spacing: 0.28em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  line-height: 1.7;
-}
-
-.cta-system {
-  margin-top: 70px;
-  padding: 64px 58px;
-  border: 1px solid var(--gold-dim);
-  background:
-    radial-gradient(circle at top, rgba(201,168,76,0.11), transparent 44%),
-    rgba(3,8,16,0.82);
-  text-align: center;
-  position: relative;
-}
-
-.cta-system::before,
-.cta-system::after {
-  content: '';
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  border-color: var(--gold-dim);
-  border-style: solid;
-  opacity: 0.55;
-}
-
-.cta-system::before {
-  top: -1px;
-  left: -1px;
-  border-width: 1px 0 0 1px;
-}
-
-.cta-system::after {
-  right: -1px;
-  bottom: -1px;
-  border-width: 0 1px 1px 0;
-}
-
-.cta-system-label {
-  font-family: var(--label);
-  font-size: 8.5px;
-  letter-spacing: 0.42em;
-  color: var(--gold-bright);
-  text-transform: uppercase;
-  margin-bottom: 22px;
-}
-
-.cta-system h3 {
-  font-family: var(--serif);
-  font-size: clamp(32px, 4.6vw, 56px);
-  font-weight: 300;
-  color: var(--cream);
-  line-height: 1.1;
-  margin-bottom: 24px;
-}
-
-.cta-system h3 em {
-  color: var(--gold-pale);
-  font-style: italic;
-}
-
-.cta-system p {
-  max-width: 620px;
-  margin: 0 auto 36px;
-  font-family: var(--body);
-  font-size: 17px;
-  line-height: 1.75;
-  color: var(--cream-dim);
-}
-
-.cta-actions {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-
-.cta-primary,
-.cta-secondary {
-  display: inline-block;
-  padding: 16px 34px;
-  text-decoration: none;
-  font-family: var(--label);
-  font-size: 9px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  border: 1px solid var(--gold-bright);
-  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-}
-
-.cta-primary {
-  background: var(--gold-bright);
-  color: var(--navy-deepest);
-}
-
-.cta-secondary {
-  color: var(--gold-bright);
-  background: transparent;
-}
-
-.cta-primary:hover,
-.cta-secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 28px rgba(201,168,76,0.16);
-}
-
-@media (max-width: 960px) {
   .arch-flow {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    display: grid;
+    grid-template-columns: 1fr 60px 1.2fr 60px 1fr;
+    gap: 0;
+    align-items: center;
+  }
+
+  .arch-node {
+    border: 1px solid var(--navy-border);
+    background: rgba(3,8,16,0.72);
+    padding: 34px 28px;
+    min-height: 150px;
+  }
+
+  .arch-node span {
+    display: block;
+    font-family: var(--label);
+    font-size: 8px;
+    letter-spacing: 0.35em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .arch-node strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 25px;
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--gold-pale);
   }
 
   .arch-arrow {
-    transform: rotate(90deg);
+    text-align: center;
+    color: var(--gold-bright);
+    font-size: 28px;
+    opacity: 0.65;
   }
 
   .toolkit-grid {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    margin: 52px 0;
+    border: 1px solid var(--navy-border);
+  }
+
+  .toolkit-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--navy-border);
+    padding: 34px 28px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.35s, border-color 0.35s, transform 0.35s;
+  }
+
+  .toolkit-card:hover {
+    background: linear-gradient(140deg, rgba(201,168,76,0.07), var(--navy-mid) 72%);
+    border-color: var(--gold-dim);
+    transform: translateY(-3px);
+  }
+
+  .toolkit-num {
+    font-family: var(--label);
+    font-size: 8.5px;
+    letter-spacing: 0.36em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .toolkit-name {
+    font-family: var(--serif);
+    font-size: 23px;
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+
+  .toolkit-role {
+    font-family: var(--body);
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .toolkit-use {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(28,47,82,0.7);
+    font-family: var(--label);
+    font-size: 8px;
+    letter-spacing: 0.28em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1.7;
   }
 
   .cta-system {
-    padding: 46px 30px;
+    margin-top: 70px;
+    padding: 64px 58px;
+    border: 1px solid var(--gold-dim);
+    background:
+      radial-gradient(circle at top, rgba(201,168,76,0.11), transparent 44%),
+      rgba(3,8,16,0.82);
+    text-align: center;
+    position: relative;
   }
-}
+
+  .cta-system::before,
+  .cta-system::after {
+    content: '';
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border-color: var(--gold-dim);
+    border-style: solid;
+    opacity: 0.55;
+  }
+
+  .cta-system::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+
+  .cta-system::after {
+    right: -1px;
+    bottom: -1px;
+    border-width: 0 1px 1px 0;
+  }
+
+  .cta-system-label {
+    font-family: var(--label);
+    font-size: 8.5px;
+    letter-spacing: 0.42em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+
+  .cta-system h3 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4.6vw, 56px);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .cta-system h3 em {
+    color: var(--gold-pale);
+    font-style: italic;
+  }
+
+  .cta-system p {
+    max-width: 620px;
+    margin: 0 auto 36px;
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--cream-dim);
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    display: inline-block;
+    padding: 16px 34px;
+    text-decoration: none;
+    font-family: var(--label);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    border: 1px solid var(--gold-bright);
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+
+  .cta-primary {
+    background: var(--gold-bright);
+    color: var(--navy-deepest);
+  }
+
+  .cta-secondary {
+    color: var(--gold-bright);
+    background: transparent;
+  }
+
+  .cta-primary:hover,
+  .cta-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(201,168,76,0.16);
+  }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
@@ -1461,6 +1458,11 @@
     .tax-box { padding: 40px 32px; }
     .matrix-wrap { padding: 10px 0 0 0; }
     .axis-y { display: none; }
+
+    .arch-flow { grid-template-columns: 1fr; gap: 14px; }
+    .arch-arrow { transform: rotate(90deg); }
+    .toolkit-grid { grid-template-columns: 1fr; }
+    .cta-system { padding: 46px 30px; }
   }
 </style>
 </head>
@@ -2100,72 +2102,12 @@
   </div>
 </section>
 
-<div class="divider-gold"></div>
+
+<div class="divider"></div>
 
 <!-- ══════════════════════════════════════════ -->
-<!-- CLOSING PHILOSOPHY -->
+<!-- 13 · TOOLKIT ECOSYSTEM -->
 <!-- ══════════════════════════════════════════ -->
-<section class="closing">
-  <div class="closing-glow"></div>
-
-  <div class="closing-ornament reveal">✦ ✦ ✦</div>
-
-  <h2 class="closing-title reveal">
-    People rarely abandon value<br>
-    because it lacks <em>importance.</em>
-  </h2>
-
-  <p class="closing-body reveal">
-    They abandon it because emotional discomfort quietly overpowered strategic judgment — and the mind, in its extraordinary ingenuity, constructed a narrative that made the loss feel like wisdom.
-  </p>
-
-  <div class="closing-law reveal">
-    Mind Anchor · The Proximity–Value Decision Framework · Strategic Maturity Systems
-  </div>
-
-  <p class="final-line reveal">
-    The most consequential question in professional life is not what you are willing to build. It is what you are willing to remain near — long enough to find out what it is worth.
-  </p>
-
-  <div class="tactical-rule reveal" style="max-width: 680px; margin: 0 auto 60px;">
-    <p>"I thought I was protecting myself. I was actually shrinking my strategic range."</p>
-  </div>
-
-  <span class="brand-footer reveal">Mind Anchor · Intellectual Property · Framework Series · ProximityOS v2.0</span>
-</section>
-
-<script>
-  // ── SCROLL REVEAL ──
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.dataset.delay || '0');
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-        }, delay);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
-
-  reveals.forEach((el) => {
-    // stagger siblings within same parent
-    const siblings = Array.from(el.parentElement.querySelectorAll('.reveal'));
-    const idx = siblings.indexOf(el);
-    el.dataset.delay = String(idx * 75);
-    observer.observe(el);
-  });
-
-  // ── HERO REVEAL ON LOAD ──
-  setTimeout(() => {
-    document.querySelectorAll('.hero .reveal').forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), i * 190 + 200);
-    });
-  }, 80);
-
-  <div class="divider"></div>
-
 <section class="toolkit-command">
   <div class="section-inner">
     <div class="section-label reveal"><span class="num">13</span> Toolkit Ecosystem</div>
@@ -2233,7 +2175,7 @@
 
       <div class="toolkit-card">
         <div class="toolkit-num">Toolkit 04</div>
-        <div class="toolkit-name">Relationship & Boundaries Toolkit</div>
+        <div class="toolkit-name">Relationship &amp; Boundaries Toolkit</div>
         <div class="toolkit-role">
           A personal implementation system for differentiating real boundaries from ego-protective avoidance.
         </div>
@@ -2269,6 +2211,70 @@
     </div>
   </div>
 </section>
+
+<div class="divider-gold"></div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- CLOSING PHILOSOPHY -->
+<!-- ══════════════════════════════════════════ -->
+<section class="closing">
+  <div class="closing-glow"></div>
+
+  <div class="closing-ornament reveal">✦ ✦ ✦</div>
+
+  <h2 class="closing-title reveal">
+    People rarely abandon value<br>
+    because it lacks <em>importance.</em>
+  </h2>
+
+  <p class="closing-body reveal">
+    They abandon it because emotional discomfort quietly overpowered strategic judgment — and the mind, in its extraordinary ingenuity, constructed a narrative that made the loss feel like wisdom.
+  </p>
+
+  <div class="closing-law reveal">
+    Mind Anchor · The Proximity–Value Decision Framework · Strategic Maturity Systems
+  </div>
+
+  <p class="final-line reveal">
+    The most consequential question in professional life is not what you are willing to build. It is what you are willing to remain near — long enough to find out what it is worth.
+  </p>
+
+  <div class="tactical-rule reveal" style="max-width: 680px; margin: 0 auto 60px;">
+    <p>"I thought I was protecting myself. I was actually shrinking my strategic range."</p>
+  </div>
+
+  <span class="brand-footer reveal">Mind Anchor · Intellectual Property · Framework Series · ProximityOS v2.0</span>
+</section>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const delay = parseInt(entry.target.dataset.delay || '0');
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
+
+  reveals.forEach((el) => {
+    // stagger siblings within same parent
+    const siblings = Array.from(el.parentElement.querySelectorAll('.reveal'));
+    const idx = siblings.indexOf(el);
+    el.dataset.delay = String(idx * 75);
+    observer.observe(el);
+  });
+
+  // ── HERO REVEAL ON LOAD ──
+  setTimeout(() => {
+    document.querySelectorAll('.hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 190 + 200);
+    });
+  }, 80);
 
   // ── NAV SCROLL OPACITY ──
   const nav = document.querySelector('nav');

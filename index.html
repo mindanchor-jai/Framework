@@ -26,70 +26,102 @@
       min-height: 100vh;
       font-family: Georgia, "Times New Roman", serif;
       color: var(--ivory);
+
       background:
-        radial-gradient(circle at top, rgba(216,170,61,0.18), transparent 30%),
+        radial-gradient(circle at top center, rgba(216,170,61,0.16), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(243,210,122,0.08), transparent 35%),
         linear-gradient(180deg, var(--navy), var(--navy-deep));
+
       padding: 64px 22px;
     }
 
     .page {
-      max-width: 1120px;
-      margin: 0 auto;
+      max-width: 1180px;
+      margin: auto;
     }
 
     header {
       text-align: center;
-      margin-bottom: 70px;
+      margin-bottom: 76px;
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 20px 48px rgba(216,170,61,0.24));
     }
 
     .eyebrow {
       color: var(--gold-soft);
       text-transform: uppercase;
-      letter-spacing: 0.26em;
+      letter-spacing: 0.28em;
       font-size: 0.74rem;
       margin-bottom: 18px;
     }
 
     h1 {
-      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      font-size: clamp(3rem, 7vw, 6rem);
       font-weight: 400;
-      color: var(--gold-soft);
-      letter-spacing: 0.035em;
       line-height: 1;
+      letter-spacing: 0.04em;
+      color: var(--gold-soft);
       margin-bottom: 24px;
     }
 
     .intro {
-      max-width: 700px;
-      margin: 0 auto;
+      max-width: 720px;
+      margin: auto;
       color: var(--muted);
       font-size: 1.08rem;
-      line-height: 1.75;
+      line-height: 1.8;
     }
 
     .rule {
-      width: 120px;
+      width: 130px;
       height: 1px;
-      margin: 36px auto 0;
+      margin: 38px auto 0;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .meta {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      padding: 9px 15px;
+      border-radius: 999px;
+      color: var(--gold-soft);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.035);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 28px;
     }
 
     .card {
       position: relative;
-      min-height: 340px;
-      padding: 34px 32px;
+      min-height: 360px;
+      padding: 34px;
+      border-radius: 30px;
+      overflow: hidden;
+
       border: 1px solid var(--line);
-      border-radius: 28px;
+
       background:
         linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.025));
-      box-shadow: 0 26px 80px rgba(0,0,0,0.32);
-      overflow: hidden;
+
+      box-shadow: 0 28px 80px rgba(0,0,0,0.32);
+
       transition: 0.35s ease;
     }
 
@@ -97,15 +129,18 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top right, rgba(243,210,122,0.18), transparent 42%);
+
+      background:
+        radial-gradient(circle at top right, rgba(243,210,122,0.18), transparent 42%);
+
       opacity: 0;
       transition: 0.35s ease;
     }
 
     .card:hover {
-      transform: translateY(-9px);
-      border-color: rgba(243,210,122,0.65);
-      box-shadow: 0 34px 90px rgba(0,0,0,0.42);
+      transform: translateY(-10px);
+      border-color: rgba(243,210,122,0.68);
+      box-shadow: 0 36px 96px rgba(0,0,0,0.42);
     }
 
     .card:hover::before {
@@ -115,6 +150,7 @@
     .inner {
       position: relative;
       z-index: 1;
+
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -129,11 +165,11 @@
     }
 
     h2 {
-      color: var(--ivory);
-      font-size: 1.72rem;
+      font-size: 1.8rem;
       font-weight: 400;
       line-height: 1.15;
       margin-bottom: 18px;
+      color: var(--ivory);
     }
 
     p {
@@ -146,13 +182,17 @@
     a {
       margin-top: auto;
       width: fit-content;
+
       color: var(--gold-soft);
       text-decoration: none;
+
       text-transform: uppercase;
       letter-spacing: 0.18em;
       font-size: 0.74rem;
-      padding-bottom: 8px;
+
       border-bottom: 1px solid rgba(216,170,61,0.48);
+      padding-bottom: 8px;
+
       transition: 0.3s ease;
     }
 
@@ -163,70 +203,110 @@
     }
 
     footer {
-      margin-top: 72px;
+      margin-top: 80px;
       text-align: center;
+
       color: rgba(247,241,223,0.46);
+
       font-size: 0.78rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
     }
 
     @media (max-width: 640px) {
+
       body {
-        padding: 44px 16px;
+        padding: 42px 16px;
+      }
+
+      .logo {
+        width: 92px;
       }
 
       .card {
         min-height: auto;
-        padding: 30px 24px;
+        padding: 28px 24px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
       }
     }
   </style>
 </head>
 
 <body>
+
   <main class="page">
+
     <header>
+
+      <img class="logo" src="Icon.png" alt="Mind Anchor Logo" />
+
       <p class="eyebrow">Mind Anchor Systems</p>
+
       <h1>Frameworks</h1>
 
       <p class="intro">
-        A structured library of thinking systems designed for founders, operators,
-        and serious builders navigating pressure, identity, relationships, and decision-making.
+        A structured library of strategic thinking systems designed for founders,
+        operators, creators, and serious builders navigating pressure,
+        relationships, identity, and decision-making.
       </p>
 
       <div class="rule"></div>
+
+      <div class="meta">
+        <span class="pill">Systems Thinking</span>
+        <span class="pill">Psychology</span>
+        <span class="pill">Decision Frameworks</span>
+      </div>
+
     </header>
 
     <section class="grid">
+
       <article class="card">
         <div class="inner">
+
           <p class="label">Library</p>
+
           <h2>Collection of Frameworks</h2>
+
           <p>
-            A central archive of Mind Anchor frameworks for clearer thinking,
-            sharper decisions, and deeper self-understanding.
+            A central archive of Mind Anchor frameworks built to sharpen clarity,
+            expose hidden patterns, and improve strategic thinking under pressure.
           </p>
+
           <a href="Library.html">Open Library →</a>
+
         </div>
       </article>
 
       <article class="card">
         <div class="inner">
+
           <p class="label">Framework 01</p>
+
           <h2>The Proximity OS</h2>
+
           <p>
-            A system for mapping every significant relationship, decision, or collaboration
-            against the forces of proximity, value, ego, and strategic cost.
+            A psychological operating system for evaluating relationships,
+            collaborations, emotional positioning, ego friction,
+            and strategic value alignment.
           </p>
+
           <a href="Proximity OS/index.html">Open Framework →</a>
+
         </div>
       </article>
+
     </section>
 
     <footer>
       Mind Anchor — Jai
     </footer>
+
   </main>
+
 </body>
 </html>

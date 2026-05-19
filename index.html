@@ -1,37 +1,232 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mind Anchor</title>
-    <h1>Mind Anchor Frameworks</h1>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mind Anchor Frameworks</title>
 
-<style>
-   .grid {
-        display: grid:
-        grid-template-columns: repeat(auto-fit, minmax(260fx, 1fr));
-        gap: 20px;
+  <style>
+    :root {
+      --navy: #050b2f;
+      --navy-deep: #020617;
+      --gold: #d8aa3d;
+      --gold-soft: #f3d27a;
+      --ivory: #f7f1df;
+      --muted: #b9b3a3;
+      --line: rgba(216, 170, 61, 0.28);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ivory);
+      background:
+        radial-gradient(circle at top, rgba(216,170,61,0.18), transparent 30%),
+        linear-gradient(180deg, var(--navy), var(--navy-deep));
+      padding: 64px 22px;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+
+    .eyebrow {
+      color: var(--gold-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.26em;
+      font-size: 0.74rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      font-weight: 400;
+      color: var(--gold-soft);
+      letter-spacing: 0.035em;
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+    }
+
+    .rule {
+      width: 120px;
+      height: 1px;
+      margin: 36px auto 0;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
     }
 
     .card {
-        border: 1px solid #181818;
-        border-radius: 12px;
-        paddings: 16px;
-    } 
-</style>
-  
-<body>
-<section class= "grid">
-    <div class= 'card'>
-        <h2>Collection of Frameworks- Library </h2>
-        <p>Frameworks for clearer thinking. Built for founders, operators, and serious builders. </p>
-        <a href= "Library.html"> Open Library</a>
-    </div>
+      position: relative;
+      min-height: 340px;
+      padding: 34px 32px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.025));
+      box-shadow: 0 26px 80px rgba(0,0,0,0.32);
+      overflow: hidden;
+      transition: 0.35s ease;
+    }
 
-    <div class= "card">
-        <h2> Framework 1</h2>
-        <p>A system for mapping every significant relationship, decision, or collaboration against two axes</p>
-        <a href= "Proximity OS/index.html"> Open Framework </a>
-    </div>
-</section>
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(243,210,122,0.18), transparent 42%);
+      opacity: 0;
+      transition: 0.35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-9px);
+      border-color: rgba(243,210,122,0.65);
+      box-shadow: 0 34px 90px rgba(0,0,0,0.42);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .inner {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .label {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.74rem;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: var(--ivory);
+      font-size: 1.72rem;
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.72;
+      margin-bottom: 34px;
+    }
+
+    a {
+      margin-top: auto;
+      width: fit-content;
+      color: var(--gold-soft);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.74rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(216,170,61,0.48);
+      transition: 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--ivory);
+      border-color: var(--ivory);
+      letter-spacing: 0.22em;
+    }
+
+    footer {
+      margin-top: 72px;
+      text-align: center;
+      color: rgba(247,241,223,0.46);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 44px 16px;
+      }
+
+      .card {
+        min-height: auto;
+        padding: 30px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Mind Anchor Systems</p>
+      <h1>Frameworks</h1>
+
+      <p class="intro">
+        A structured library of thinking systems designed for founders, operators,
+        and serious builders navigating pressure, identity, relationships, and decision-making.
+      </p>
+
+      <div class="rule"></div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <div class="inner">
+          <p class="label">Library</p>
+          <h2>Collection of Frameworks</h2>
+          <p>
+            A central archive of Mind Anchor frameworks for clearer thinking,
+            sharper decisions, and deeper self-understanding.
+          </p>
+          <a href="Library.html">Open Library →</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="inner">
+          <p class="label">Framework 01</p>
+          <h2>The Proximity OS</h2>
+          <p>
+            A system for mapping every significant relationship, decision, or collaboration
+            against the forces of proximity, value, ego, and strategic cost.
+          </p>
+          <a href="Proximity OS/index.html">Open Framework →</a>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      Mind Anchor — Jai
+    </footer>
+  </main>
 </body>
 </html>

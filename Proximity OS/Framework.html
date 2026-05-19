@@ -1196,6 +1196,252 @@
     line-height: 1.74;
   }
 
+  /* ── TOOLKIT ECOSYSTEM ── */
+.toolkit-command {
+  background:
+    radial-gradient(circle at top right, rgba(201,168,76,0.08), transparent 38%),
+    linear-gradient(180deg, var(--navy-panel), var(--navy-deepest));
+}
+
+.framework-architecture {
+  border: 1px solid var(--gold-dim);
+  background: linear-gradient(140deg, rgba(201,168,76,0.07), rgba(10,22,40,0.72));
+  padding: 52px;
+  margin: 52px 0;
+}
+
+.arch-label {
+  font-family: var(--label);
+  font-size: 8.5px;
+  letter-spacing: 0.42em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.arch-flow {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr 60px 1fr;
+  gap: 0;
+  align-items: center;
+}
+
+.arch-node {
+  border: 1px solid var(--navy-border);
+  background: rgba(3,8,16,0.72);
+  padding: 34px 28px;
+  min-height: 150px;
+}
+
+.arch-node span {
+  display: block;
+  font-family: var(--label);
+  font-size: 8px;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.arch-node strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--gold-pale);
+}
+
+.arch-arrow {
+  text-align: center;
+  color: var(--gold-bright);
+  font-size: 28px;
+  opacity: 0.65;
+}
+
+.toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  margin: 52px 0;
+  border: 1px solid var(--navy-border);
+}
+
+.toolkit-card {
+  background: var(--navy-mid);
+  border: 1px solid var(--navy-border);
+  padding: 34px 28px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.35s, border-color 0.35s, transform 0.35s;
+}
+
+.toolkit-card:hover {
+  background: linear-gradient(140deg, rgba(201,168,76,0.07), var(--navy-mid) 72%);
+  border-color: var(--gold-dim);
+  transform: translateY(-3px);
+}
+
+.toolkit-num {
+  font-family: var(--label);
+  font-size: 8.5px;
+  letter-spacing: 0.36em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.toolkit-name {
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.toolkit-role {
+  font-family: var(--body);
+  font-size: 15px;
+  color: var(--cream-dim);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.toolkit-use {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(28,47,82,0.7);
+  font-family: var(--label);
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+
+.cta-system {
+  margin-top: 70px;
+  padding: 64px 58px;
+  border: 1px solid var(--gold-dim);
+  background:
+    radial-gradient(circle at top, rgba(201,168,76,0.11), transparent 44%),
+    rgba(3,8,16,0.82);
+  text-align: center;
+  position: relative;
+}
+
+.cta-system::before,
+.cta-system::after {
+  content: '';
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-color: var(--gold-dim);
+  border-style: solid;
+  opacity: 0.55;
+}
+
+.cta-system::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+.cta-system::after {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+.cta-system-label {
+  font-family: var(--label);
+  font-size: 8.5px;
+  letter-spacing: 0.42em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.cta-system h3 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4.6vw, 56px);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.cta-system h3 em {
+  color: var(--gold-pale);
+  font-style: italic;
+}
+
+.cta-system p {
+  max-width: 620px;
+  margin: 0 auto 36px;
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--cream-dim);
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.cta-primary,
+.cta-secondary {
+  display: inline-block;
+  padding: 16px 34px;
+  text-decoration: none;
+  font-family: var(--label);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  border: 1px solid var(--gold-bright);
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.cta-primary {
+  background: var(--gold-bright);
+  color: var(--navy-deepest);
+}
+
+.cta-secondary {
+  color: var(--gold-bright);
+  background: transparent;
+}
+
+.cta-primary:hover,
+.cta-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(201,168,76,0.16);
+}
+
+@media (max-width: 960px) {
+  .arch-flow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .arch-arrow {
+    transform: rotate(90deg);
+  }
+
+  .toolkit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-system {
+    padding: 46px 30px;
+  }
+}
+
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     section { padding: 80px 28px; }
@@ -1917,6 +2163,112 @@
       setTimeout(() => el.classList.add('visible'), i * 190 + 200);
     });
   }, 80);
+
+  <div class="divider"></div>
+
+<section class="toolkit-command">
+  <div class="section-inner">
+    <div class="section-label reveal"><span class="num">13</span> Toolkit Ecosystem</div>
+
+    <h2 class="section-h reveal">
+      The Framework Becomes<br><em>Operational Through Toolkits</em>
+    </h2>
+
+    <p class="body-text reveal" style="max-width: 780px;">
+      The Proximity–Value Decision Framework is the central decision architecture. The toolkits are not separate frameworks. They are implementation instruments designed to help different audiences apply the framework in specific contexts: personal decisions, founder conflict, leadership governance, relationships, and Proximity Tax calculation.
+    </p>
+
+    <div class="framework-architecture reveal">
+      <div class="arch-label">Mind Anchor Framework Architecture</div>
+
+      <div class="arch-flow">
+        <div class="arch-node">
+          <span>Operating Context</span>
+          <strong>ProximityOS</strong>
+        </div>
+
+        <div class="arch-arrow">→</div>
+
+        <div class="arch-node">
+          <span>Primary Framework</span>
+          <strong>The Proximity–Value Decision Framework</strong>
+        </div>
+
+        <div class="arch-arrow">→</div>
+
+        <div class="arch-node">
+          <span>Implementation Layer</span>
+          <strong>5 Audience Toolkits</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolkit-grid reveal">
+      <div class="toolkit-card">
+        <div class="toolkit-num">Toolkit 01</div>
+        <div class="toolkit-name">The Decision Audit Toolkit</div>
+        <div class="toolkit-role">
+          A self-audit system for emotionally distorted decisions, avoidance patterns, and ego-triggered judgment corruption.
+        </div>
+        <div class="toolkit-use">Use before exit, withdrawal, or major repositioning.</div>
+      </div>
+
+      <div class="toolkit-card">
+        <div class="toolkit-num">Toolkit 02</div>
+        <div class="toolkit-name">Founder Conflict Toolkit</div>
+        <div class="toolkit-role">
+          A conflict analysis and emotional governance system for founders, operators, and co-founder pairs.
+        </div>
+        <div class="toolkit-use">Use inside high-stakes founder relationships.</div>
+      </div>
+
+      <div class="toolkit-card">
+        <div class="toolkit-num">Toolkit 03</div>
+        <div class="toolkit-name">Leadership Emotional Governance Toolkit</div>
+        <div class="toolkit-role">
+          A diagnostic system for team tension, emotional filtering, strategic discomfort mapping, and personnel decision governance.
+        </div>
+        <div class="toolkit-use">Use for leaders, executives, and teams.</div>
+      </div>
+
+      <div class="toolkit-card">
+        <div class="toolkit-num">Toolkit 04</div>
+        <div class="toolkit-name">Relationship & Boundaries Toolkit</div>
+        <div class="toolkit-role">
+          A personal implementation system for differentiating real boundaries from ego-protective avoidance.
+        </div>
+        <div class="toolkit-use">Use for personal relationship clarity.</div>
+      </div>
+
+      <div class="toolkit-card">
+        <div class="toolkit-num">Toolkit 05</div>
+        <div class="toolkit-name">The Proximity Tax Calculator</div>
+        <div class="toolkit-role">
+          A diagnostic calculator that quantifies the cost of emotional avoidance across opportunity, relationships, ego, withdrawal, and strategic range.
+        </div>
+        <div class="toolkit-use">Use to calculate the hidden invoice of avoidance.</div>
+      </div>
+    </div>
+
+    <div class="cta-system reveal">
+      <div class="cta-system-label">Start With the First Instrument</div>
+
+      <h3>
+        Use the Framework.<br>
+        <em>Do Not Just Understand It.</em>
+      </h3>
+
+      <p>
+        Begin with Toolkit 01, The Decision Audit Toolkit. It is the most direct entry point because it helps you pause before an emotionally activated decision becomes permanent strategic damage. Then return to the Framework Library to explore the full Mind Anchor framework ecosystem.
+      </p>
+
+      <div class="cta-actions">
+        <a class="cta-primary" href="TK1-DecisionAudit.pdf">Open Toolkit 01</a>
+        <a class="cta-secondary" href="https://mindanchor-jai.github.io/Framework/">Open Framework Library</a>
+      </div>
+    </div>
+  </div>
+</section>
 
   // ── NAV SCROLL OPACITY ──
   const nav = document.querySelector('nav');

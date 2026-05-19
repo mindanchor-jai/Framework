@@ -1,66 +1,543 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mind Anchor</title>
-    <h1>Framework #1 - Proximity OS</h1>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<style>
-   .grid {
-        display: grid:
-        grid-template-columns: repeat(auto-fit, minmax(260fx, 1fr));
-        gap: 20px;
+  <title>Proximity OS | Mind Anchor</title>
+
+  <style>
+
+    :root {
+      --navy: #030817;
+      --navy2: #07112f;
+      --gold: #d6aa42;
+      --goldSoft: #f5d77b;
+      --ivory: #f8f0dc;
+      --muted: #a9a18f;
+      --line: rgba(214,170,66,0.18);
     }
 
-    .card {
-        border: 1px solid #C5A059;
-        border-radius: 12px;
-        paddings: 16px;
-    } 
-</style>
-    
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      min-height:100vh;
+      overflow-x:hidden;
+
+      font-family: Georgia, "Times New Roman", serif;
+      color:var(--ivory);
+
+      background:
+        radial-gradient(circle at top, rgba(214,170,66,0.08), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(245,215,123,0.05), transparent 28%),
+        linear-gradient(180deg, #07112f 0%, #030817 100%);
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+
+      background-image:
+        linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+
+      background-size:84px 84px;
+
+      mask-image: radial-gradient(circle at center, black 38%, transparent 92%);
+      pointer-events:none;
+    }
+
+    main{
+      max-width:1400px;
+      margin:auto;
+      padding:70px 24px 120px;
+      position:relative;
+    }
+
+    header{
+      text-align:center;
+      margin-bottom:120px;
+      position:relative;
+      z-index:2;
+    }
+
+    .logo{
+      width:130px;
+      margin-bottom:30px;
+
+      filter:
+        drop-shadow(0 0 24px rgba(214,170,66,0.25))
+        drop-shadow(0 0 60px rgba(214,170,66,0.10));
+    }
+
+    .eyebrow{
+      color:var(--goldSoft);
+      text-transform:uppercase;
+      letter-spacing:0.28em;
+      font-size:0.72rem;
+      margin-bottom:20px;
+    }
+
+    h1{
+      font-size:clamp(3.5rem, 9vw, 7rem);
+      line-height:0.95;
+      font-weight:400;
+      color:var(--goldSoft);
+
+      letter-spacing:0.04em;
+      margin-bottom:28px;
+    }
+
+    .intro{
+      max-width:780px;
+      margin:auto;
+
+      color:var(--muted);
+      font-size:1.08rem;
+      line-height:1.9;
+    }
+
+    .ecosystem{
+      position:relative;
+      min-height:1500px;
+    }
+
+    .orbit-lines{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+
+    .orbit-lines svg{
+      width:100%;
+      height:100%;
+    }
+
+    .orbit-lines circle{
+      fill:none;
+      stroke:rgba(214,170,66,0.08);
+      stroke-width:1;
+    }
+
+    .framework-core{
+      position:absolute;
+
+      top:50%;
+      left:50%;
+
+      transform:translate(-50%, -50%);
+
+      width:420px;
+      min-height:420px;
+
+      border-radius:50%;
+
+      border:1px solid rgba(214,170,66,0.18);
+
+      background:
+        radial-gradient(circle at center,
+        rgba(214,170,66,0.10),
+        rgba(255,255,255,0.015));
+
+      backdrop-filter: blur(6px);
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+
+      text-align:center;
+
+      padding:50px;
+    }
+
+    .framework-core::before{
+      content:"";
+      position:absolute;
+      inset:-40px;
+
+      border-radius:50%;
+
+      border:1px solid rgba(214,170,66,0.05);
+    }
+
+    .core-label{
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:0.22em;
+      font-size:0.7rem;
+      margin-bottom:20px;
+    }
+
+    .framework-core h2{
+      font-size:2.6rem;
+      line-height:1;
+      font-weight:400;
+      margin-bottom:20px;
+      color:var(--ivory);
+    }
+
+    .framework-core p{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:1rem;
+      margin-bottom:24px;
+    }
+
+    .open-framework{
+      color:var(--goldSoft);
+      text-decoration:none;
+
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      font-size:0.72rem;
+
+      border-bottom:1px solid rgba(214,170,66,0.4);
+      padding-bottom:8px;
+
+      transition:0.3s ease;
+    }
+
+    .open-framework:hover{
+      color:var(--ivory);
+      border-color:var(--ivory);
+    }
+
+    .toolkit{
+      position:absolute;
+      width:270px;
+    }
+
+    .toolkit::before{
+      content:"";
+      position:absolute;
+
+      width:12px;
+      height:12px;
+
+      background:var(--goldSoft);
+
+      border-radius:50%;
+
+      top:-20px;
+      left:0;
+
+      box-shadow:
+        0 0 14px rgba(245,215,123,0.7),
+        0 0 40px rgba(214,170,66,0.28);
+    }
+
+    .toolkit-label{
+      color:var(--gold);
+      text-transform:uppercase;
+      letter-spacing:0.22em;
+      font-size:0.68rem;
+      margin-bottom:12px;
+    }
+
+    .toolkit h3{
+      font-size:1.65rem;
+      line-height:1.08;
+      font-weight:400;
+      margin-bottom:16px;
+      color:var(--ivory);
+    }
+
+    .toolkit p{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:0.96rem;
+      margin-bottom:20px;
+    }
+
+    .actions{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .actions a{
+      color:var(--goldSoft);
+      text-decoration:none;
+
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      font-size:0.68rem;
+
+      border-bottom:1px solid rgba(214,170,66,0.38);
+      padding-bottom:6px;
+
+      transition:0.3s ease;
+    }
+
+    .actions a:hover{
+      color:var(--ivory);
+      border-color:var(--ivory);
+    }
+
+    /* TOOLKIT POSITIONING */
+
+    .tk1{
+      top:40px;
+      left:10%;
+    }
+
+    .tk2{
+      top:230px;
+      right:8%;
+    }
+
+    .tk3{
+      top:720px;
+      right:6%;
+    }
+
+    .tk4{
+      bottom:180px;
+      left:14%;
+    }
+
+    .tk5{
+      top:1020px;
+      left:4%;
+    }
+
+    footer{
+      text-align:center;
+      margin-top:120px;
+
+      color:rgba(248,240,220,0.42);
+
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      font-size:0.78rem;
+    }
+
+    @media (max-width:1100px){
+
+      .ecosystem{
+        min-height:auto;
+      }
+
+      .orbit-lines{
+        display:none;
+      }
+
+      .framework-core{
+        position:relative;
+        inset:auto;
+        transform:none;
+
+        width:100%;
+        min-height:auto;
+
+        border-radius:32px;
+
+        margin-bottom:90px;
+      }
+
+      .framework-core::before{
+        display:none;
+      }
+
+      .toolkit{
+        position:relative;
+        width:100%;
+
+        left:auto !important;
+        right:auto !important;
+        top:auto !important;
+        bottom:auto !important;
+
+        margin-bottom:80px;
+
+        padding-left:28px;
+
+        border-left:1px solid rgba(214,170,66,0.22);
+      }
+
+      .toolkit::before{
+        left:-7px;
+        top:2px;
+      }
+
+      .framework-core h2{
+        font-size:2.2rem;
+      }
+
+      .toolkit h3{
+        font-size:1.5rem;
+      }
+    }
+
+  </style>
+</head>
+
 <body>
-<section class= "grid">
-    <div class= 'card'>
-        <h2>The Proximity-Value Framework </h2>
-        <p>The full intellectual case - why emotional discomfort overrides startegy, and what it's quitely costing you. </p>
-        <a href= "Framework.html"> Open Article</a>
+
+<main>
+
+  <header>
+
+    <img class="logo" src="Icon.png" alt="Mind Anchor Logo" />
+
+    <p class="eyebrow">Mind Anchor Framework Ecosystem</p>
+
+    <h1>Proximity OS</h1>
+
+    <p class="intro">
+      A strategic psychological operating system exploring how emotional discomfort,
+      ego preservation, avoidance behavior, and proximity distortion silently alter
+      judgment, leadership, relationships, and long-term decision quality.
+    </p>
+
+  </header>
+
+  <section class="ecosystem">
+
+    <div class="orbit-lines">
+
+      <svg viewBox="0 0 1400 1500">
+
+        <circle cx="700" cy="760" r="340"></circle>
+        <circle cx="700" cy="760" r="520"></circle>
+
+      </svg>
+
     </div>
 
-    <div class= 'toolkit'>
-        <h3>The Decision Audit Toolkit </h3>
-        <p>Use before any exit, withdrawal, or major repositioning. </p>
-        <a href= "TK1-DecisionAudit.pdf" > View Toolkit</a>
-        <a href= "TK1-DecisionAudit.pdf" download> Download Toolkit</a>
-    </div>
+    <!-- FRAMEWORK CORE -->
 
-    <div class= 'toolkit'>
-        <h3>The Founder Conflict Toolkit </h3>
-        <p>For co-founder pairs and operators. </p>
-        <a href= "TK2-FounderConflict.pdf" > View Toolkit</a>
-        <a href= "TK2-FounderConflict.pdf" download> Download Toolkit</a>
-    </div>
+    <article class="framework-core">
 
-    <div class= 'toolkit'>
-        <h3>The Leadership Emotional Governance Toolkit </h3>
-        <p>For executives and team leads. </p>
-        <a href= "TK3-LeadershipGov.pdf" > View Toolkit</a>
-        <a href= "TK3-LeadershipGov.pdf" download> Download Toolkit</a>
-    </div>
+      <p class="core-label">Framework Core</p>
 
-    <div class= 'toolkit'>
-        <h3>The Relationships & Boundaries Toolkit </h3>
-        <p>Tell the difference between a real boundary and avoidance wearing moral vocabulary. </p>
-        <a href= "TK4-Relationships.pdf" > View Toolkit</a>
-        <a href= "TK4-Relationships.pdf" download> Download Toolkit</a>
-    </div>
+      <h2>The Proximity-Value Framework</h2>
 
-    <div class= 'toolkit'>
-        <h3>The Proximity Tax Calculator </h3>
-        <p>Calculate the accumulated cost of your avoidance architecture </p>
-        <a href= "TK5-ProximityTax.pdf" > View Toolkit</a>
-        <a href= "TK5-ProximityTax.pdf" download> Download Toolkit</a>
-    </div>
-</section>     
+      <p>
+        The full intellectual case for why emotional discomfort overrides strategy —
+        and what that invisible distortion is quietly costing people,
+        founders, teams, and organizations.
+      </p>
+
+      <a class="open-framework" href="Framework.html">
+        Open Framework →
+      </a>
+
+    </article>
+
+    <!-- TOOLKIT 01 -->
+
+    <article class="toolkit tk1">
+
+      <p class="toolkit-label">Operational Layer 01</p>
+
+      <h3>The Decision Audit Toolkit</h3>
+
+      <p>
+        Use before any exit, withdrawal,
+        repositioning, or emotionally charged strategic move.
+      </p>
+
+      <div class="actions">
+        <a href="TK1-DecisionAudit.pdf">View Toolkit →</a>
+        <a href="TK1-DecisionAudit.pdf" download>Download PDF ↓</a>
+      </div>
+
+    </article>
+
+    <!-- TOOLKIT 02 -->
+
+    <article class="toolkit tk2">
+
+      <p class="toolkit-label">Operational Layer 02</p>
+
+      <h3>The Founder Conflict Toolkit</h3>
+
+      <p>
+        Designed for founders, operators,
+        partnerships, and emotionally loaded leadership dynamics.
+      </p>
+
+      <div class="actions">
+        <a href="TK2-FounderConflict.pdf">View Toolkit →</a>
+        <a href="TK2-FounderConflict.pdf" download>Download PDF ↓</a>
+      </div>
+
+    </article>
+
+    <!-- TOOLKIT 03 -->
+
+    <article class="toolkit tk3">
+
+      <p class="toolkit-label">Operational Layer 03</p>
+
+      <h3>The Leadership Emotional Governance Toolkit</h3>
+
+      <p>
+        Executive-level emotional governance systems
+        for pressure environments, leadership teams, and organizational clarity.
+      </p>
+
+      <div class="actions">
+        <a href="TK3-LeadershipGov.pdf">View Toolkit →</a>
+        <a href="TK3-LeadershipGov.pdf" download>Download PDF ↓</a>
+      </div>
+
+    </article>
+
+    <!-- TOOLKIT 04 -->
+
+    <article class="toolkit tk4">
+
+      <p class="toolkit-label">Operational Layer 04</p>
+
+      <h3>The Relationships & Boundaries Toolkit</h3>
+
+      <p>
+        Learn the difference between authentic boundaries
+        and avoidance disguised as moral clarity.
+      </p>
+
+      <div class="actions">
+        <a href="TK4-Relationships.pdf">View Toolkit →</a>
+        <a href="TK4-Relationships.pdf" download>Download PDF ↓</a>
+      </div>
+
+    </article>
+
+    <!-- TOOLKIT 05 -->
+
+    <article class="toolkit tk5">
+
+      <p class="toolkit-label">Operational Layer 05</p>
+
+      <h3>The Proximity Tax Calculator</h3>
+
+      <p>
+        Quantify the hidden long-term cost
+        of emotional avoidance, delayed confrontation, and distorted positioning.
+      </p>
+
+      <div class="actions">
+        <a href="TK5-ProximityTax.pdf">View Toolkit →</a>
+        <a href="TK5-ProximityTax.pdf" download>Download PDF ↓</a>
+      </div>
+
+    </article>
+
+  </section>
+
+  <footer>
+    Mind Anchor — Jai
+  </footer>
+
+</main>
+
 </body>
 </html>

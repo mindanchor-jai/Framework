@@ -144,23 +144,64 @@
       max-width: 760px;
     }
 
-    .open-main,
-    .actions a {
-      color: var(--goldSoft);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.72rem;
-      border-bottom: 1px solid rgba(214,170,66,0.4);
-      padding-bottom: 8px;
-      transition: 0.3s ease;
+    .actions{
+      width:360px;
+      padding:28px;
+      background: linear-gradient(
+        180deg, rgba(181,120,58,.12), rgba(181,120,58,.04));
+      border:1px solid rgba(181,120,58,.25);
+      border-radius:22px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      align-items:flex-start;
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
     }
 
-    .open-main:hover,
-    .actions a:hover {
-      color: var(--ivory);
-      border-color: var(--ivory);
-      letter-spacing: 0.22em;
+    .purchase-label{
+      color:#d8b27c;
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      font-size:.68rem;
+    }
+
+    .purchase-title{
+      font-size:2rem;
+      line-height:1.1;
+      color:#f5d77b;
+      margin:0;
+    }
+
+    .purchase-copy{
+      color:var(--muted);
+      line-height:1.8;
+      margin:0;
+    }
+
+    .purchase-button{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:100%;
+      padding:18px;
+      background:
+        linear-gradient(
+            135deg,
+            #b5783a,
+            #d8b27c);
+      color:#07112f;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.72rem; 
+      font-weight:700;
+      border-radius:12px;
+      transition:.3s ease;
+    }
+
+    .purchase-button:hover{
+      transform:translateY(-2px);
+      box-shadow: 0 14px 30px rgba(181,120,58,.30);
     }
 
     .vault {
@@ -305,18 +346,6 @@
                        border-radius:24px; 
                        box-shadow: 0 20px 60px rgba( 0, 0, 0, .25 );
         }
-
-        .purchase-label{ color:#d8b27c; text-transform:uppercase; letter-spacing:.22em; font-size:.68rem; margin-bottom:14px; }
-        .purchase-card{width:360px; padding:30px; background:linear-gradient(180deg, rgba(181,120,58,.10), rgba(181,120,58,.03));
-                       border:1px solid rgba(181,120,58,.25); border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,.25);
-                      } 
-        .purchase-copy{ color:var(--muted); line-height:1.8; margin-bottom:24px; } 
-        .purchase-button{display:flex; align-items:center; justify-content:center; width:100%; padding:18px 24px; margin-top:8px; 
-                         background: linear-gradient(135deg, #b5783a, #d8b27c) !important;
-                         color:#07112f !important; text-decoration:none !important; border:none !important; border-bottom:none !important;
-                         border-radius:12px; font-size:.72rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; transition:.3s ease;} 
-        .purchase-button:hover{color:#07112f !important; transform:translateY(-2px); letter-spacing:.2em; box-shadow: 0 14px 30px rgba(181,120,58,.30);
-        @media(max-width:860px){ .purchase-card{ margin-top:30px; min-width:100%;}
       }
     }
   </style>
